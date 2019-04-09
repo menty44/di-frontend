@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import swal from 'sweetalert';
-
+import alertify from 'alertifyjs';
 
 let createReactClass = require('create-react-class');
-let items = []
+let items = [];
 let no_of_moves;
 const max_no_of_moves = 64;
 let mario_jump;
@@ -13,23 +13,26 @@ let max_mashroom;
 function Welcome(props) {
 	return (
 		<div>
-			<h2>Mario Maze Game</h2>
-			<p>You need to eat all the mashrooms in 64 steps. By Default maze size is 10 x 10, you can change it by reloading or entering the height and width in prompt.</p>
+			<h2>DATA INT MAZE GAME</h2>
+			<p>You need to attack all the grimlins in 64 steps. By Default maze size is 10 x 10, you can change it by reloading or entering the height and width in prompt.</p>
 		</div>
 		)
 }
 
-
 function ScoreCard(props) {
-	let score_achived  = document.getElementById('score_achived')
+	let score_achieved  = document.getElementById('score_achieved');
 	
-	let no_of_moves_score = document.getElementById('no_of_moves')
-	let steps_remaining = document.getElementById('steps_remaining')
-	let mashrooms_remaining = document.getElementById('mashrooms_remaining')
-	steps_remaining.innerHTML = max_no_of_moves -  no_of_moves
-	no_of_moves_score.innerHTML = no_of_moves
-	mashrooms_remaining.innerHTML = document.getElementsByClassName('active').length
-	score_achived.innerHTML = max_mashroom - document.getElementsByClassName('active').length
+	let no_of_moves_score = document.getElementById('no_of_moves');
+	let steps_remaining = document.getElementById('steps_remaining');
+	let mashrooms_remaining = document.getElementById('mashrooms_remaining');
+	steps_remaining.innerHTML = max_no_of_moves -  no_of_moves;
+	no_of_moves_score.innerHTML = no_of_moves;
+	mashrooms_remaining.innerHTML = document.getElementsByClassName('active').length;
+	score_achieved.innerHTML = max_mashroom - document.getElementsByClassName('active').length;
+	if (score_achieved > 1) {
+        alertify.notify('Kaboom', 'success', 3, function(){  console.log('dismissed'); });
+	}
+
 }
 
 let Score = createReactClass({
@@ -41,8 +44,8 @@ let Score = createReactClass({
 		return (
 		<div id="score">
 			<div>
-				<p>Score Achived</p>
-				<p id="score_achived">0</p>
+				<p>Score Achieved</p>
+				<p id="score_achieved">0</p>
 			</div>
 			<div>
 				<p>Steps Used</p>
@@ -59,7 +62,7 @@ let Score = createReactClass({
 		</div>
 		)
 	}
-})
+});
 
 let Cell = createReactClass({
 	getInitialState: function() {
@@ -73,15 +76,35 @@ let Cell = createReactClass({
 		</div>
 		)
 	}
-})
+});
 
 
 function checkFinish() {
 	if(no_of_moves === max_no_of_moves){
-		let confirm = window.confirm("Game Over. Do you want to restart?");
-		if (confirm === true){
-			window.location.reload();
-		}
+		// let confirm = window.confirm("Game Over. Do you want to restart?");
+        swal({
+            title: "Game Over. Do you want to restart?",
+            text: "Once started the points will reset to 0!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Reloading New Game", {
+                        icon: "success",
+                    });
+					let delay =()=>{
+                        window.location.reload();
+					};
+                    setTimeout(delay, 3000);
+                } else {
+                    swal("Just continue playing with negative points");
+                }
+            });
+		// if (confirm === true){
+		// 	window.location.reload();
+		// }
 	}
 	let check = document.getElementsByClassName('active');
 	if(check.length === 0){
@@ -99,7 +122,7 @@ let Box = createReactClass({
 		//
 		let c = []  
 		for(let i=1; i<=this.props.matrix; i++){ 
-			c.push( <Cell key={i} id={i} cells={c} /> )
+			c.push( <Cell key={i} id={i} cells={c} /> );
 			items.push(i)
 		}
 		return {cells: c} 
@@ -109,7 +132,7 @@ let Box = createReactClass({
 		  <div> { this.state.cells } </div>
 		)    
 	}
-})
+});
 
 
 
@@ -131,17 +154,17 @@ function shuffleArray(array) {
 
 function movement(event){
 	if (event.keyCode === 37){
-		let mario = document.getElementsByClassName('mario')
-		let marioid = mario[0].id
-		let move = document.getElementById(marioid-1)
+		let mario = document.getElementsByClassName('mario');
+		let marioid = mario[0].id;
+		let move = document.getElementById(marioid-1);
 		if(move != null){
 			if(move.classList.contains('active')){
 				move.classList.toggle('active')
 			}
-			move.innerHTML = document.getElementById(marioid).innerHTML
-			document.getElementById(marioid).innerHTML = ""
-			document.getElementById(marioid).classList.toggle('mario')
-			move.classList.toggle('mario')
+			move.innerHTML = document.getElementById(marioid).innerHTML;
+			document.getElementById(marioid).innerHTML = "";
+			document.getElementById(marioid).classList.toggle('mario');
+			move.classList.toggle('mario');
 			marioid = marioid-1
 		}
 		else{
@@ -150,18 +173,18 @@ function movement(event){
 		
 	}
 	if (event.keyCode === 38){
-		let mario = document.getElementsByClassName('mario')
-		let marioid = mario[0].id
+		let mario = document.getElementsByClassName('mario');
+		let marioid = mario[0].id;
 		let move_up = parseInt(marioid,10) - parseInt(mario_jump,10);
-		let move = document.getElementById(move_up)
+		let move = document.getElementById(move_up);
 		if(move != null){
 			if(move.classList.contains('active')){
 				move.classList.toggle('active')
 			}
-			move.innerHTML = document.getElementById(marioid).innerHTML
-			document.getElementById(marioid).innerHTML = ""
-			document.getElementById(marioid).classList.toggle('mario')
-			move.classList.toggle('mario')
+			move.innerHTML = document.getElementById(marioid).innerHTML;
+			document.getElementById(marioid).innerHTML = "";
+			document.getElementById(marioid).classList.toggle('mario');
+			move.classList.toggle('mario');
 			marioid = marioid-mario_jump
 		}
 		else{
@@ -170,19 +193,19 @@ function movement(event){
 	}
 	
 	if (event.keyCode ===39){
-		let mario = document.getElementsByClassName('mario')
-		let marioid = mario[0].id
-		let move_right = parseInt(marioid,10) + 1
-		let move = document.getElementById(move_right)
+		let mario = document.getElementsByClassName('mario');
+		let marioid = mario[0].id;
+		let move_right = parseInt(marioid,10) + 1;
+		let move = document.getElementById(move_right);
 		if(move != null){
 			if(move.classList.contains('active')){
 				move.classList.toggle('active')
 			}
-			move.innerHTML = document.getElementById(marioid).innerHTML
+			move.innerHTML = document.getElementById(marioid).innerHTML;
 
-			document.getElementById(marioid).innerHTML = ""
-			document.getElementById(marioid).classList.toggle('mario')
-			move.classList.toggle('mario')
+			document.getElementById(marioid).innerHTML = "";
+			document.getElementById(marioid).classList.toggle('mario');
+			move.classList.toggle('mario');
 			marioid = marioid+1
 		}
 		else{
@@ -191,18 +214,18 @@ function movement(event){
 	}
 	
 	if (event.keyCode === 40){
-		let mario = document.getElementsByClassName('mario')
-		let marioid = mario[0].id
-		let move_up = parseInt(marioid,10) + parseInt(mario_jump,10)
-		let move = document.getElementById(move_up)
+		let mario = document.getElementsByClassName('mario');
+		let marioid = mario[0].id;
+		let move_up = parseInt(marioid,10) + parseInt(mario_jump,10);
+		let move = document.getElementById(move_up);
 		if(move != null){
 			if(move.classList.contains('active')){
 				move.classList.toggle('active')
 			}
-			move.innerHTML = document.getElementById(marioid).innerHTML
-			document.getElementById(marioid).innerHTML = ""
-			document.getElementById(marioid).classList.toggle('mario')
-			move.classList.toggle('mario')
+			move.innerHTML = document.getElementById(marioid).innerHTML;
+			document.getElementById(marioid).innerHTML = "";
+			document.getElementById(marioid).classList.toggle('mario');
+			move.classList.toggle('mario');
 			marioid = marioid+mario_jump
 		}
 		else{
