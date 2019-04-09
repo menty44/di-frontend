@@ -48,19 +48,19 @@ let Score = createReactClass({
 		<div id="score">
 			<div>
 				<p>Score Achieved</p>
-				<p id="score_achieved">0</p>
+				<p style={{color: '#00adef'}} id="score_achieved">0</p>
 			</div>
 			<div>
 				<p>Steps Used</p>
-				<p id="no_of_moves">0</p>
+				<p style={{color: '#00adef'}} id="no_of_moves">0</p>
 			</div>
 			<div >
 				<p>Steps Remaining</p>
-				<p id="steps_remaining">0</p>
+				<p style={{color: '#00adef'}} id="steps_remaining">0</p>
 			</div>
 			<div >
 				<p>Mashroom Remaining</p>
-				<p id="mashrooms_remaining">0</p>
+				<p style={{color: '#00adef'}} id="mashrooms_remaining">0</p>
 			</div>
 		</div>
 		)
@@ -81,10 +81,8 @@ let Cell = createReactClass({
 	}
 });
 
-
 function checkFinish() {
 	if(no_of_moves === max_no_of_moves){
-		// let confirm = window.confirm("Game Over. Do you want to restart?");
         swal({
             title: "Game Over. Do you want to restart?",
             text: "Once started the points will reset to 0!",
@@ -105,9 +103,6 @@ function checkFinish() {
                     swal("Just continue playing with negative points");
                 }
             });
-		// if (confirm === true){
-		// 	window.location.reload();
-		// }
 	}
 	let check = document.getElementsByClassName('active');
 	if(check.length === 0){
@@ -117,7 +112,6 @@ function checkFinish() {
 		}
 	}
 }
-
 
 let Box = createReactClass({
 	getInitialState: function() {
@@ -136,8 +130,6 @@ let Box = createReactClass({
 		)    
 	}
 });
-
-
 
 /**
  * Randomize array element order in-place.
@@ -287,7 +279,6 @@ class App extends Component {
 	}
 	
 	onKeyPress(event){
- 		console.log('key event', event.keyCode);
 		if(event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40){
 			if (no_of_moves === undefined || no_of_moves === null){
 			  	no_of_moves = 0
