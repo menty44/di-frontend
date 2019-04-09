@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import swal from 'sweetalert';
 import alertify from 'alertifyjs';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 
 let createReactClass = require('create-react-class');
 let items = [];
@@ -19,27 +23,26 @@ function Welcome(props) {
 		)
 }
 
-function ScoreCard(props) {
+function ScoreCard() {
+    console.log('score_achieved', );
 	let score_achieved  = document.getElementById('score_achieved');
-	
+
 	let no_of_moves_score = document.getElementById('no_of_moves');
 	let steps_remaining = document.getElementById('steps_remaining');
 	let mashrooms_remaining = document.getElementById('mashrooms_remaining');
 	steps_remaining.innerHTML = max_no_of_moves -  no_of_moves;
 	no_of_moves_score.innerHTML = no_of_moves;
 	mashrooms_remaining.innerHTML = document.getElementsByClassName('active').length;
-	score_achieved.innerHTML = max_mashroom - document.getElementsByClassName('active').length;
-	if (score_achieved > 1) {
-        alertify.notify('Kaboom', 'success', 3, function(){  console.log('dismissed'); });
-	}
 
+	score_achieved.innerHTML = max_mashroom - document.getElementsByClassName('active').length;
+    console.log('no_of_moves', no_of_moves);
 }
 
 let Score = createReactClass({
 	getInitialState: function() {
 		return {score: 0}
-
 	},
+
 	render: function() {
 		return (
 		<div id="score">
@@ -159,6 +162,7 @@ function movement(event){
 		let move = document.getElementById(marioid-1);
 		if(move != null){
 			if(move.classList.contains('active')){
+                alertify.notify('Kaboom! Grimlin killed', 'success', 3, function(){  console.log('dismissed'); });
 				move.classList.toggle('active')
 			}
 			move.innerHTML = document.getElementById(marioid).innerHTML;
@@ -179,6 +183,7 @@ function movement(event){
 		let move = document.getElementById(move_up);
 		if(move != null){
 			if(move.classList.contains('active')){
+                alertify.notify('Kaboom! Grimlin killed', 'success', 3, function(){  console.log('dismissed'); });
 				move.classList.toggle('active')
 			}
 			move.innerHTML = document.getElementById(marioid).innerHTML;
@@ -199,6 +204,7 @@ function movement(event){
 		let move = document.getElementById(move_right);
 		if(move != null){
 			if(move.classList.contains('active')){
+                alertify.notify('Kaboom! Grimlin killed', 'success', 3, function(){  console.log('dismissed'); });
 				move.classList.toggle('active')
 			}
 			move.innerHTML = document.getElementById(marioid).innerHTML;
@@ -220,6 +226,7 @@ function movement(event){
 		let move = document.getElementById(move_up);
 		if(move != null){
 			if(move.classList.contains('active')){
+                alertify.notify('Kaboom! Grimlin killed', 'success', 3, function(){  console.log('dismissed'); });
 				move.classList.toggle('active')
 			}
 			move.innerHTML = document.getElementById(marioid).innerHTML;
@@ -269,7 +276,9 @@ class App extends Component {
 			elem_position.classList.toggle('active')
 		}
 
-		let unique_data = shuffled_data.filter(function(obj) { return truncated_data.indexOf(obj) === -1; });
+		let unique_data = shuffled_data.filter(function(obj) {
+			return truncated_data.indexOf(obj) === -1;
+		});
 		let item = unique_data[Math.floor(Math.random()*unique_data.length)];
 		let marioposition = document.getElementById(item);
 		marioposition.classList.toggle('mario');
@@ -278,11 +287,13 @@ class App extends Component {
 	}
 	
 	onKeyPress(event){
+ 		console.log('key event', event.keyCode);
 		if(event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40){
-			if (no_of_moves === undefined){
+			if (no_of_moves === undefined || no_of_moves === null){
 			  	no_of_moves = 0
+			}else {
+                no_of_moves = no_of_moves + 1;
 			}
-			no_of_moves = no_of_moves + 1;
 
 		}
 		movement(event);
@@ -296,10 +307,19 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<Welcome/>
-				<Box matrix={this.state.matrix_size}/>
-				<Score/>
+                <Container>
+					<Row>
+                        <Col>
+                            <Welcome/>
+                            <Box matrix={this.state.matrix_size}/>
+						</Col>
+                        <Col>
+                            <Score/>
+						</Col>
+					</Row>
+                </Container>
 			</div>
+
 		);
 	}
 }
