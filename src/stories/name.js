@@ -10,8 +10,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {Box, Score} from "../App";
 
-// storiesOf('Cheki', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
 storiesOf('Data Integrated', module)
     .add('Cheki', () =>  (
         <div>

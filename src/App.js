@@ -24,7 +24,6 @@ function Welcome(props) {
 }
 
 function ScoreCard() {
-    console.log('score_achieved', );
 	let score_achieved  = document.getElementById('score_achieved');
 
 	let no_of_moves_score = document.getElementById('no_of_moves');
@@ -33,9 +32,7 @@ function ScoreCard() {
 	steps_remaining.innerHTML = max_no_of_moves -  no_of_moves;
 	no_of_moves_score.innerHTML = no_of_moves;
 	mashrooms_remaining.innerHTML = document.getElementsByClassName('active').length;
-
 	score_achieved.innerHTML = max_mashroom - document.getElementsByClassName('active').length;
-    console.log('no_of_moves', no_of_moves);
 }
 
 let Score = createReactClass({
