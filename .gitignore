@@ -22,3 +22,7 @@ node_modules/
 *.tar
 *.zip
 
+# IDE Jetbrains #
+############
+.idea
+
