@@ -7,6 +7,17 @@ npm install
 ```
 ### Node version used for the project
      v10.15.0
+     
+### How to install node v10
+     -sudo apt-get update
+     -sudo apt-get install build-essential libssl-dev
+     -curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh -o install_nvm.sh
+     -nano install_nvm.sh
+     -bash install_nvm.sh
+     -source ~/.profile
+     -nvm ls -remote
+     -nvm install 10.15.0
+     -nvm use 10.15.0
 
 ### Run the server
 ```
