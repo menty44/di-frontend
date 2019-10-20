@@ -1,4 +1,4 @@
-# di-frontend
+# hackerBay
 
 ### Install the required packages
 ```
