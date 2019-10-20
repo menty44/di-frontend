@@ -5,6 +5,10 @@ import alertify from 'alertifyjs';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Game from "./components/game.component";
+import Intro from "./components/intro.component";
+import Stats from "./components/scores.component";
+import _ from 'lodash';
 
 
 let createReactClass = require('create-react-class');
@@ -17,8 +21,7 @@ let max_mashroom;
 function Welcome(props) {
 	return (
 		<div>
-			<h2>DATA INT MAZE GAME</h2>
-			<p>You need to attack all the grimlins in 64 steps. By Default maze size is 10 x 10, you can change it by reloading or entering the height and width in prompt.</p>
+			<Intro/>
 		</div>
 		)
 }
@@ -42,24 +45,7 @@ let Score = createReactClass({
 
 	render: function() {
 		return (
-		<div id="score">
-			<div>
-				<p>Score Achieved</p>
-				<p style={{color: '#00adef'}} id="score_achieved">0</p>
-			</div>
-			<div>
-				<p>Steps Used</p>
-				<p style={{color: '#00adef'}} id="no_of_moves">0</p>
-			</div>
-			<div >
-				<p>Steps Remaining</p>
-				<p style={{color: '#00adef'}} id="steps_remaining">0</p>
-			</div>
-			<div >
-				<p>Mashroom Remaining</p>
-				<p style={{color: '#00adef'}} id="mashrooms_remaining">0</p>
-			</div>
-		</div>
+		<Stats/>
 		)
 	}
 });
@@ -114,17 +100,17 @@ let Box = createReactClass({
 	getInitialState: function() {
 		// build an array to hold all the cells
 		//
-		let c = []  
-		for(let i=1; i<=this.props.matrix; i++){ 
+		let c = []
+		for(let i=1; i<=this.props.matrix; i++){
 			c.push( <Cell key={i} id={i} cells={c} /> );
 			items.push(i)
 		}
-		return {cells: c} 
+		return {cells: c}
 	},
 	render: function() {
 		return (
 		  <div> { this.state.cells } </div>
-		)    
+		)
 	}
 });
 
@@ -140,7 +126,7 @@ function shuffleArray(array) {
 		array[j] = temp;
 	}
 	return array
-	
+
 }
 
 
@@ -163,7 +149,7 @@ function movement(event){
 		else{
 			no_of_moves = no_of_moves-1
 		}
-		
+
 	}
 	if (event.keyCode === 38){
 		let mario = document.getElementsByClassName('mario');
@@ -185,7 +171,7 @@ function movement(event){
 			no_of_moves = no_of_moves-1
 		}
 	}
-	
+
 	if (event.keyCode ===39){
 		let mario = document.getElementsByClassName('mario');
 		let marioid = mario[0].id;
@@ -207,7 +193,7 @@ function movement(event){
 			no_of_moves = no_of_moves-1
 		}
 	}
-	
+
 	if (event.keyCode === 40){
 		let mario = document.getElementsByClassName('mario');
 		let marioid = mario[0].id;
@@ -256,7 +242,7 @@ class App extends Component {
 		let matrix = document.getElementById('root');
 		matrix.style.height = 40 * height + "px";
 		matrix.style.width = 40 * width + "px";
-		let shuffled_data = shuffleArray(items);
+		let shuffled_data = _.shuffle(items);
 		let truncated_data = shuffled_data.slice(0,parseInt(this.state.matrix_size/3,10));
 
 		for (let i = 0; i < truncated_data.length; i++) {
@@ -274,7 +260,7 @@ class App extends Component {
 		marioposition.innerHTML="<img src='mario.jpg' alt='mario' class='maze-image'/>";
 		max_mashroom = document.getElementsByClassName('active').length
 	}
-	
+
 	onKeyPress(event){
 		if(event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40){
 			if (no_of_moves === undefined || no_of_moves === null){
