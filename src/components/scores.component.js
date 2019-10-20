@@ -11,8 +11,8 @@ class Stats extends Component{
 
     render() {
         return (
-            <div id="score">
-                <div>
+            <div id="score"  style={{width: "100%", margin: "0 auto"}}>
+                <div style={{display: "inline-block"}}>
 
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
@@ -24,7 +24,7 @@ class Stats extends Component{
                     </Card>
 
                 </div>
-                <div>
+                <div style={{display: "inline-block"}}>
 
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
@@ -36,13 +36,28 @@ class Stats extends Component{
                     </Card>
 
                 </div>
-                <div >
-                    <p>Steps Remaining</p>
-                    <p style={{color: '#00adef'}} id="steps_remaining">0</p>
+                <div style={{display: "inline-block"}}>
+
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Body>
+                            <Card.Title>Steps Remaining</Card.Title>
+                            <Card.Text>
+                                <p style={{color: '#00adef'}} id="steps_remaining">0</p>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
                 </div>
-                <div >
-                    <p>Mashroom Remaining</p>
-                    <p style={{color: '#00adef'}} id="mashrooms_remaining">0</p>
+                <div style={{display: "inline-block"}} >
+
+
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Body>
+                            <Card.Title>Grimlin Remaining</Card.Title>
+                            <Card.Text>
+                                <p style={{color: '#00adef'}} id="mashrooms_remaining">0</p>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
                 </div>
             </div>
         );
